@@ -1,0 +1,2 @@
+# magicminer
+magicminer
