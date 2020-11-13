@@ -5,11 +5,6 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -55,7 +50,10 @@ public class LotoFacilGame implements Game {
                     .collect(Collectors.toList()).toArray(new Boolean[GAME_SIZE]);
 
             IntStream.rangeClosed(0, 14).boxed().forEach(i -> {
-                balls[Integer.parseInt(columns.get(i+2))-1] = true;
+                String column = columns.get(i + 2);
+                if(column.length() < 4) {
+                    balls[Integer.parseInt(column) - 1] = true;
+                }
             });
 
             LotoFacilGame game = LotoFacilGame.createByBalls(balls);
