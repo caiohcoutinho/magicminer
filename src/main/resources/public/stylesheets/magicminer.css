@@ -1,0 +1,19 @@
+table.gameListTable{
+    width: 100%;
+}
+
+table.gameListTable th{
+    text-align: center;
+}
+
+table.gameListTable tr{
+    background-color: white;
+}
+
+table.gameListTable tr.odd{
+    background-color: #f3ece4;
+}
+
+table.gameListTable tr:hover{
+    background-color: #b5d5f5;
+}

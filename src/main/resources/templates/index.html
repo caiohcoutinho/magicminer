@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="js/vue.js"></script>
+  <script src="js/axios.min.js"></script>
+  <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+  <link rel="stylesheet" href="stylesheets/bootstrap.min.css.map">
+  <link rel="stylesheet" href="stylesheets/magicminer.css">
+  <script src="https://cdn.jsdelivr.net/npm/underscore@1.11.0/underscore-min.js"></script>
+  <title>Magic Miner</title>
+</head>
+<body>
+<div id="magicminerApp" class="container-fluid text-center">
+  <h1>Magic Miner</h1>
+  <table class="gameListTable table table-striped table-bordered table-hover">
+    <tbody>
+      <tr>
+        <th>#</th>
+        <th>Data</th>
+        <th>Validado?</th>
+        <th colspan="25">Bolas</th>
+      </tr>
+      <tr v-for="(game, name, index) in gamesList" v-bind:class="{odd: index %2 == 1}">
+        <td>{{game.gameNumber}}</td>
+        <td>{{game.date}}</td>
+        <td><span v-if="game.valid == true">&#10003;</span></td>
+        <td v-for="i in _.range(0, 25)">{{game.balls[i] ? (i+1) : ""}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<script src="js/magicminer.js"></script>
+</body>
+</html>

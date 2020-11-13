@@ -1,0 +1,1 @@
+web: java -jar target/magicminer-1.0.jar
