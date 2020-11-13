@@ -12,25 +12,33 @@ public class RandomAlgorithmTest {
     @Test
     public void testClassic2076(){
         RandomAlgorithm algorithm = RandomAlgorithm.createBySeed(RANDOM_SEED);
-        Assert.assertEquals(9, algorithm.run().score(LotoFacilGame.getClassicResult(2076)));
+        LotoFacilGame result = algorithm.run();
+        Assert.assertTrue(result.getValid());
+        Assert.assertEquals(10, result.score(LotoFacilGame.getClassicResult(2076)));
     }
 
     @Test
     public void testClassic2077(){
         RandomAlgorithm algorithm = RandomAlgorithm.createBySeed(RANDOM_SEED);
-        Assert.assertEquals(9, algorithm.run().score(LotoFacilGame.getClassicResult(2077)));
+        LotoFacilGame result = algorithm.run();
+        Assert.assertTrue(result.getValid());
+        Assert.assertEquals(10, result.score(LotoFacilGame.getClassicResult(2077)));
     }
 
     @Test
     public void testClassic2078(){
         RandomAlgorithm algorithm = RandomAlgorithm.createBySeed(RANDOM_SEED);
-        Assert.assertEquals(8, algorithm.run().score(LotoFacilGame.getClassicResult(2078)));
+        LotoFacilGame result = algorithm.run();
+        Assert.assertTrue(result.getValid());
+        Assert.assertEquals(9, result.score(LotoFacilGame.getClassicResult(2078)));
     }
 
     @Test
     public void testClassic2079(){
         RandomAlgorithm algorithm = RandomAlgorithm.createBySeed(RANDOM_SEED);
-        Assert.assertEquals(8, algorithm.run().score(LotoFacilGame.getClassicResult(2079)));
+        LotoFacilGame result = algorithm.run();
+        Assert.assertTrue(result.getValid());
+        Assert.assertEquals(9, result.score(LotoFacilGame.getClassicResult(2079)));
     }
 
     @Test

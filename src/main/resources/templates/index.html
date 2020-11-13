@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,24 +12,48 @@
   <title>Magic Miner</title>
 </head>
 <body>
-<div id="magicminerApp" class="container-fluid text-center">
+<div id="magicminerApp" class="container text-center">
   <h1>Magic Miner</h1>
-  <table class="gameListTable table table-striped table-bordered table-hover">
-    <tbody>
+  <div class="algorithms">
+    <div>
+      <hr>
+      <h3>Aleatório</h3>
+      Seed: <input v-model="randomAlgorithmSeed" type="number">
+      <button v-on:click="runRandom()">Executar</button>
+    </div>
+    <div>
+      <hr>
+      <h3>Genético</h3>
+      Seed: <input v-model="geneticAlgorithmSeed" type="number">
+      <button v-on:click="runGenetic()">Executar</button>
+      <hr>
+    </div>
+  </div>
+  <div class="gabarito">
+    <table class="gameListTable table table-striped table-bordered table-hover">
+      <tbody>
       <tr>
         <th>#</th>
         <th>Data</th>
-        <th>Validado?</th>
-        <th colspan="25">Bolas</th>
+        <th>Bolas</th>
+        <th>Algoritmo</th>
       </tr>
       <tr v-for="(game, index) in gamesList" v-bind:class="{odd: index %2 == 1}">
-        <td>{{game.gameNumber}} {{index}}</td>
+        <td>{{game.gameNumber}}<span v-if="game.valid == true">&#10003;</span></td>
         <td>{{game.date}}</td>
-        <td><span v-if="game.valid == true">&#10003;</span></td>
-        <td v-for="i in _.range(0, 25)">{{game.ballsCompressed[i] == "1" ? (i+1) : ""}}</td>
+        <td>
+          <span v-for="i in _.range(0, 25)">{{game.ballsCompressed[i] == "1" ? ""+(i+1)+"&nbsp;" : ""}}</span>
+        </td>
+        <td>
+          <span v-if="generatedResultByGameNumber[game.gameNumber] != null">
+            <span v-for="i in _.range(0, 25)">{{generatedResultByGameNumber[game.gameNumber].ballsCompressed[i] == "1" ? ""+(i+1)+"&nbsp;" : ""}}</span>
+            <span>({{generatedResultByGameNumber[game.gameNumber].score}} acertos)</span>
+          </span>
+        </td>
       </tr>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
 </div>
 <script src="js/magicminer.js"></script>
 </body>

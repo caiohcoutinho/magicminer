@@ -12,7 +12,7 @@ public class GeneticAlgorithm implements Algorithm<LotoFacilGame> {
 
     private static final int FARM_SIZE = 100;
     private static final int ITERATIONS = 50;
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     private static final double MUTATION_CHANCE = 0.1;
 
     private List<LotoFacilGame> games;
@@ -57,7 +57,7 @@ public class GeneticAlgorithm implements Algorithm<LotoFacilGame> {
 
         for(int i = 0; i < ITERATIONS; i++) {
             farm.sort(Comparator.comparingDouble(Specimen::getScore));
-            System.out.println("Fit = "+farm.get(FARM_SIZE-1).getScore());
+            log("Fit = "+farm.get(FARM_SIZE-1).getScore());
 
             // parents
             Specimen p1 = farm.get(FARM_SIZE - 2);

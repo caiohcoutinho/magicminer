@@ -46,7 +46,7 @@ public class Specimen {
         Boolean[] balls = new Boolean[LotoFacilGame.GAME_SIZE];
         for(int i = 0; i < LotoFacilGame.GAME_SIZE; i++){
             boolean value = false;
-            if(LotoFacilGame.VALID_GAME_SIZE - count >= LotoFacilGame.GAME_SIZE - i + 1 || random.nextFloat() * genes[i] > 0.5){
+            if(count < LotoFacilGame.VALID_GAME_SIZE && (LotoFacilGame.VALID_GAME_SIZE - count >= LotoFacilGame.GAME_SIZE - i || random.nextFloat() * genes[i] > 0.5)){
                 value = true;
                 count++;
             }

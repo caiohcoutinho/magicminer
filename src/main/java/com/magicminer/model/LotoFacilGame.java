@@ -25,6 +25,7 @@ public class LotoFacilGame implements Game {
     private Boolean[] balls = new Boolean[GAME_SIZE];
     private int gameNumber = 0;
     private LocalDate date;
+    private int score = 0;
 
     static {
         InputStream stream = LotoFacilGame.class.getResourceAsStream("LotoFacilPreviousGames.csv");
@@ -120,6 +121,14 @@ public class LotoFacilGame implements Game {
         this.date = date;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     @Override
     public int score(Game res) {
         LotoFacilGame result = (LotoFacilGame) res;
@@ -131,6 +140,7 @@ public class LotoFacilGame implements Game {
                 score++;
             }
         }
-        return score;
+        this.score = score;
+        return this.score;
     }
 }

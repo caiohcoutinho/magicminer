@@ -15,21 +15,30 @@ public class GeneticAlgorithmTest {
     @Test
     public void testClassic2076(){
         GeneticAlgorithm algorithm = GeneticAlgorithm.createBySeed(RANDOM_SEED);
-        Assert.assertEquals(7, algorithm.run().score(LotoFacilGame.getClassicResult(2076)));
+        algorithm.generateSuperSpecimen();
+        LotoFacilGame run = algorithm.run();
+        Assert.assertTrue(run.getValid());
+        Assert.assertEquals(8, run.score(LotoFacilGame.getClassicResult(2076)));
     }
 
     @Test
     public void testClassic2077(){
         GeneticAlgorithm algorithm = GeneticAlgorithm.createBySeed(RANDOM_SEED);
         algorithm.setGames(Lists.newArrayList(LotoFacilGame.getClassicResult(2076)));
-        Assert.assertEquals(6, algorithm.run().score(LotoFacilGame.getClassicResult(2077)));
+        algorithm.generateSuperSpecimen();
+        LotoFacilGame run = algorithm.run();
+        Assert.assertTrue(run.getValid());
+        Assert.assertEquals(7, run.score(LotoFacilGame.getClassicResult(2077)));
     }
 
     @Test
     public void testClassic2078(){
         GeneticAlgorithm algorithm = GeneticAlgorithm.createBySeed(RANDOM_SEED);
         algorithm.setGames(Lists.newArrayList(LotoFacilGame.getClassicResult(2076), LotoFacilGame.getClassicResult(2078)));
-        Assert.assertEquals(9, algorithm.run().score(LotoFacilGame.getClassicResult(2078)));
+        algorithm.generateSuperSpecimen();
+        LotoFacilGame run = algorithm.run();
+        Assert.assertTrue(run.getValid());
+        Assert.assertEquals(10, run.score(LotoFacilGame.getClassicResult(2078)));
     }
 
     @Test
@@ -37,7 +46,10 @@ public class GeneticAlgorithmTest {
         GeneticAlgorithm algorithm = GeneticAlgorithm.createBySeed(RANDOM_SEED);
         algorithm.setGames(Lists.newArrayList(LotoFacilGame.getClassicResult(2076), LotoFacilGame.getClassicResult(2078),
                 LotoFacilGame.getClassicResult(2079)));
-        Assert.assertEquals(10, algorithm.run().score(LotoFacilGame.getClassicResult(2079)));
+        algorithm.generateSuperSpecimen();
+        LotoFacilGame run = algorithm.run();
+        Assert.assertTrue(run.getValid());
+        Assert.assertEquals(11, run.score(LotoFacilGame.getClassicResult(2079)));
     }
 
     @Test

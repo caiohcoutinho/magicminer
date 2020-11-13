@@ -29,7 +29,7 @@ public class RandomAlgorithm implements Algorithm<LotoFacilGame> {
         Boolean[] balls = new Boolean[LotoFacilGame.GAME_SIZE];
         for(int i = 0; i < LotoFacilGame.GAME_SIZE; i++){
             boolean value = false;
-            if(LotoFacilGame.VALID_GAME_SIZE - count >= LotoFacilGame.GAME_SIZE - i + 1 || random.nextBoolean()){
+            if(count < LotoFacilGame.VALID_GAME_SIZE && (LotoFacilGame.VALID_GAME_SIZE - count >= LotoFacilGame.GAME_SIZE - i || random.nextBoolean())){
                 value = true;
                 count++;
             }
