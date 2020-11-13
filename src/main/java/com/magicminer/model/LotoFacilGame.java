@@ -1,5 +1,10 @@
 package com.magicminer.model;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -21,26 +26,12 @@ public class LotoFacilGame implements Game {
     private LocalDate date;
 
     static {
-        String classicGames = LotoFacilPreviousGames.GAMES_001+
-                LotoFacilPreviousGames.GAMES_002+
-                LotoFacilPreviousGames.GAMES_003+
-                LotoFacilPreviousGames.GAMES_004+
-                LotoFacilPreviousGames.GAMES_005+
-                LotoFacilPreviousGames.GAMES_006+
-                LotoFacilPreviousGames.GAMES_007+
-                LotoFacilPreviousGames.GAMES_008+
-                LotoFacilPreviousGames.GAMES_009+
-                LotoFacilPreviousGames.GAMES_010+
-                LotoFacilPreviousGames.GAMES_011+
-                LotoFacilPreviousGames.GAMES_012+
-                LotoFacilPreviousGames.GAMES_013+
-                LotoFacilPreviousGames.GAMES_014+
-                LotoFacilPreviousGames.GAMES_015+
-                LotoFacilPreviousGames.GAMES_016+
-                LotoFacilPreviousGames.GAMES_017+
-                LotoFacilPreviousGames.GAMES_018+
-                LotoFacilPreviousGames.GAMES_019+
-                LotoFacilPreviousGames.GAMES_020;
+        String classicGames = null;
+        try {
+            classicGames = new String(Files.readAllBytes(Paths.get(LotoFacilGame.class.getResource("/LotoFacilPreviousGames.csv").toURI())));
+        } catch (IOException | URISyntaxException e) {
+            throw new RuntimeException("Unable to read LotoFacilPreviousGames.csv file");
+        }
         List<String> games = Arrays.stream(classicGames.split("\n")).collect(Collectors.toList());
 
         CLASSIC_RESULTS = new HashMap<>();
