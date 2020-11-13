@@ -26,7 +26,7 @@
         <td>{{game.gameNumber}} {{index}}</td>
         <td>{{game.date}}</td>
         <td><span v-if="game.valid == true">&#10003;</span></td>
-        <td v-for="i in _.range(0, 25)">{{game.balls[i] ? (i+1) : ""}}</td>
+        <td v-for="i in _.range(0, 25)">{{game.ballsCompressed[i] == "1" ? (i+1) : ""}}</td>
       </tr>
     </tbody>
   </table>

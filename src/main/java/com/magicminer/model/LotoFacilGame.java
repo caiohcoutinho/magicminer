@@ -1,5 +1,6 @@
 package com.magicminer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 import java.io.ByteArrayOutputStream;
@@ -46,7 +47,7 @@ public class LotoFacilGame implements Game {
             int gameNumber = Integer.parseInt(columns.get(0));
             LocalDate date = LocalDate.parse(columns.get(1), DATE_TIME_FORMATTER);
 
-            Boolean[] balls = IntStream.rangeClosed(0, games.size()).boxed().map(t -> false)
+            Boolean[] balls = IntStream.rangeClosed(0, GAME_SIZE).boxed().map(t -> false)
                     .collect(Collectors.toList()).toArray(new Boolean[GAME_SIZE]);
 
             IntStream.rangeClosed(0, 14).boxed().forEach(i -> {
@@ -86,6 +87,11 @@ public class LotoFacilGame implements Game {
         return Arrays.stream(this.balls).filter(b -> b == TRUE).count() == VALID_GAME_SIZE;
     }
 
+    public String getBallsCompressed(){
+        return Arrays.stream(getBalls()).map(b -> b ? "1": "0").reduce("", String::concat);
+    }
+
+    @JsonIgnore
     public Boolean[] getBalls() {
         return balls;
     }
