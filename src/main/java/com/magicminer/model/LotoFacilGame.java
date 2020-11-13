@@ -1,6 +1,11 @@
 package com.magicminer.model;
 
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -26,12 +31,15 @@ public class LotoFacilGame implements Game {
     private LocalDate date;
 
     static {
-        String classicGames = null;
+        InputStream stream = LotoFacilGame.class.getResourceAsStream("LotoFacilPreviousGames.csv");
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            classicGames = new String(Files.readAllBytes(Paths.get(LotoFacilGame.class.getResource("/LotoFacilPreviousGames.csv").toURI())));
-        } catch (IOException | URISyntaxException e) {
-            throw new RuntimeException("Unable to read LotoFacilPreviousGames.csv file");
+            IOUtils.copy(stream, outputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Could not read file.",e);
         }
+        String classicGames  = outputStream.toString();
         List<String> games = Arrays.stream(classicGames.split("\n")).collect(Collectors.toList());
 
         CLASSIC_RESULTS = new HashMap<>();
