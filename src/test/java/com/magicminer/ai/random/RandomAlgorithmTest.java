@@ -1,4 +1,4 @@
-package com.magicminer.ai;
+package com.magicminer.ai.random;
 
 import com.magicminer.model.LotoFacilGame;
 import org.junit.Assert;

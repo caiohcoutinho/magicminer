@@ -23,6 +23,12 @@
     </div>
     <div>
       <hr>
+      <h3>Constante</h3>
+      Seed: <input v-model="constantAlgorithmSeed" type="number">
+      <button v-on:click="runConstant()">Executar</button>
+    </div>
+    <div>
+      <hr>
       <h3>Genético</h3>
       Seed: <input v-model="geneticAlgorithmSeed" type="number">
       <button v-on:click="runGenetic()">Executar</button>

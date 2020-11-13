@@ -1,7 +1,8 @@
 package com.magicminer;
 
-import com.magicminer.ai.GeneticAlgorithm;
-import com.magicminer.ai.RandomAlgorithm;
+import com.magicminer.ai.constant.ConstantAlgorithm;
+import com.magicminer.ai.genetic.GeneticAlgorithm;
+import com.magicminer.ai.random.RandomAlgorithm;
 import com.magicminer.model.LotoFacilGame;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -45,6 +46,22 @@ public class LotoFacilController {
         GeneticAlgorithm algorithm = seed != null ? GeneticAlgorithm.createBySeed(seed) : GeneticAlgorithm.create();
         algorithm.setGames(games);
         algorithm.generateSuperSpecimen();
+        List<LotoFacilGame> result = games.stream()
+                .filter(g -> g.getValid())
+                .sorted(Comparator.comparingInt(LotoFacilGame::getGameNumber))
+                .map(g -> {
+                    LotoFacilGame execution = algorithm.run();
+                    execution.score(g);
+                    execution.setGameNumber(g.getGameNumber());
+                    return execution;
+                }).collect(Collectors.toList());
+        return ResponseEntity.ok(result);
+    }
+
+    @RequestMapping(value = "/lotofacil/constant", method = RequestMethod.GET)
+    public ResponseEntity<List<LotoFacilGame>> runConstantAlgorithm(@RequestParam(name="seed", required = false) Long seed) {
+        List<LotoFacilGame> games = new ArrayList<>(LotoFacilGame.CLASSIC_RESULTS.values());
+        ConstantAlgorithm algorithm = seed != null ? ConstantAlgorithm.createBySeed(seed) : ConstantAlgorithm.create();
         List<LotoFacilGame> result = games.stream()
                 .filter(g -> g.getValid())
                 .sorted(Comparator.comparingInt(LotoFacilGame::getGameNumber))

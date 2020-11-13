@@ -1,4 +1,4 @@
-package com.magicminer.ai;
+package com.magicminer.ai.genetic;
 
 import com.magicminer.model.LotoFacilGame;
 import org.assertj.core.util.Lists;

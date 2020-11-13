@@ -1,5 +1,6 @@
-package com.magicminer.ai;
+package com.magicminer.ai.genetic;
 
+import com.magicminer.ai.Algorithm;
 import com.magicminer.model.LotoFacilGame;
 
 import java.util.Comparator;
@@ -15,16 +16,15 @@ public class GeneticAlgorithm implements Algorithm<LotoFacilGame> {
     private static final boolean DEBUG = false;
     private static final double MUTATION_CHANCE = 0.1;
 
+    private Random random;
     private List<LotoFacilGame> games;
     private Specimen superSpecimen;
 
     private GeneticAlgorithm(){}
 
-    public GeneticAlgorithm(Random random) {
+    private GeneticAlgorithm(Random random) {
         this.random = random;
     }
-
-    private Random random;
 
     public static GeneticAlgorithm create(){
         return new GeneticAlgorithm(new Random());

@@ -1,17 +1,19 @@
-package com.magicminer.ai;
+package com.magicminer.ai.random;
 
+import com.magicminer.ai.Algorithm;
 import com.magicminer.model.LotoFacilGame;
 
 import java.util.Random;
 
 public class RandomAlgorithm implements Algorithm<LotoFacilGame> {
 
+    private Random random;
+
     private RandomAlgorithm(){};
 
-    public RandomAlgorithm(Random random) {
+    private RandomAlgorithm(Random random) {
         this.random = random;
     }
-    private Random random;
 
     public static RandomAlgorithm create(){
         return new RandomAlgorithm(new Random());

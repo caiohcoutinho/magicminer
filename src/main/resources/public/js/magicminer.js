@@ -5,7 +5,8 @@ var app = new Vue({
             gamesList: [],
             generatedResults: [],
             randomAlgorithmSeed: null,
-            geneticAlgorithmSeed: null
+            geneticAlgorithmSeed: null,
+            constantAlgorithmSeed: null
         };
     },
     computed: {
@@ -32,6 +33,15 @@ var app = new Vue({
             axios.get("/lotofacil/genetic", {
                 params: {
                     seed: this.geneticAlgorithmSeed
+                }
+            }).then(response => {
+                this.generatedResults = _.sortBy(response.data, g => -g.gameNumber);
+            })
+        },
+        runConstant: function(){
+            axios.get("/lotofacil/constant", {
+                params: {
+                    seed: this.constantAlgorithmSeed
                 }
             }).then(response => {
                 this.generatedResults = _.sortBy(response.data, g => -g.gameNumber);
