@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
   <link rel="stylesheet" href="stylesheets/bootstrap.min.css.map">
   <link rel="stylesheet" href="stylesheets/magicminer.css">
-  <script src="https://cdn.jsdelivr.net/npm/underscore@1.11.0/underscore-min.js"></script>
+  <script src="js/underscore-min.js"></script>
   <title>Magic Miner</title>
 </head>
 <body>
@@ -41,7 +41,11 @@
       <tr>
         <th>#</th>
         <th>Data</th>
-        <th>Bolas</th>
+        <th>Gabarito:
+          <select v-bind:value="selectedGameTableId" v-on:input="updateSelectedTable($event.target.value)">
+            <option v-for="gameTable in gameTableList" v-bind:value="gameTable.gameTableId">{{gameTable.name}}</option>
+          </select>
+        </th>
         <th>Algoritmo</th>
       </tr>
       <tr v-for="(game, index) in gamesList" v-bind:class="{odd: index %2 == 1}">

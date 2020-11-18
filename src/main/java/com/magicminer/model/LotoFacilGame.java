@@ -14,7 +14,7 @@ import java.util.stream.IntStream;
 
 import static java.lang.Boolean.TRUE;
 
-public class LotoFacilGame implements Game {
+public class LotoFacilGame implements IGame {
 
     public static final Map<Integer, LotoFacilGame> CLASSIC_RESULTS;
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -130,7 +130,7 @@ public class LotoFacilGame implements Game {
     }
 
     @Override
-    public int score(Game res) {
+    public int score(IGame res) {
         LotoFacilGame result = (LotoFacilGame) res;
         Boolean[] balls = this.getBalls();
         Boolean[] resultBalls = result.getBalls();
@@ -142,5 +142,19 @@ public class LotoFacilGame implements Game {
         }
         this.score = score;
         return this.score;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LotoFacilGame that = (LotoFacilGame) o;
+        return gameNumber == that.gameNumber &&
+                date.equals(that.date) && getBallsCompressed().equals(that.getBallsCompressed());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(gameNumber, date, getBallsCompressed());
     }
 }

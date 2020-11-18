@@ -4,8 +4,11 @@ import com.magicminer.ai.constant.ConstantAlgorithm;
 import com.magicminer.ai.genetic.GeneticAlgorithm;
 import com.magicminer.ai.random.RandomAlgorithm;
 import com.magicminer.model.LotoFacilGame;
+import com.magicminer.model.entity.GameCustomRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,10 +21,12 @@ import java.util.stream.Collectors;
 @Controller
 public class LotoFacilController {
 
-    @RequestMapping(value = "/lotofacil", method = RequestMethod.GET)
-    public ResponseEntity<List<LotoFacilGame>> getGameList() {
-        List<LotoFacilGame> games = new ArrayList<>(LotoFacilGame.CLASSIC_RESULTS.values());
-        return ResponseEntity.ok(games);
+    @Autowired
+    private GameCustomRepository gameCustomRepository;
+
+    @RequestMapping(value = "/lotofacil/{gameTableId}", method = RequestMethod.GET)
+    public ResponseEntity<List<LotoFacilGame>> getGameList(@PathVariable("gameTableId") Long gameTableId) {
+        return ResponseEntity.ok(gameCustomRepository.getAllGames());
     }
 
     @RequestMapping(value = "/lotofacil/random", method = RequestMethod.GET)

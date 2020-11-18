@@ -2,12 +2,15 @@ var app = new Vue({
     el: '#magicminerApp',
     data() {
         return {
+            selectedGameTableId: null,
+            selectedGameTableName: null,
+            gameTableList: [],
             gamesList: [],
             generatedResults: [],
             randomAlgorithmSeed: null,
             geneticAlgorithmSeed: null,
             constantAlgorithmSeed: null
-        };
+        }
     },
     computed: {
         generatedResultByGameNumber: function(){
@@ -46,12 +49,23 @@ var app = new Vue({
             }).then(response => {
                 this.generatedResults = _.sortBy(response.data, g => -g.gameNumber);
             })
+        },
+        updateSelectedTable: function(selectedGameTableId){
+            this.selectedGameTableId = selectedGameTableId;
+            axios.get("/gameTable/"+this.selectedGameTableId).then(response => {
+                this.selectedGameTableName = response.data.name;
+                axios.get("/lotofacil/"+this.selectedGameTableId).then(response => {
+                    this.gamesList = _.sortBy(response.data, g => -g.gameNumber);
+                });
+            });
         }
     },
     mounted() {
-        axios.get("/lotofacil")
-            .then(response => {
-                this.gamesList = _.sortBy(response.data, g => -g.gameNumber);
-            })
+        axios.get("/configuration/defaultGameTable").then(response => {
+            axios.get("/gameTable").then(response => {
+                this.gameTableList = _.sortBy(response.data, g => g.name);
+            });
+            this.updateSelectedTable(response.data.value);
+        });
     }
 })
