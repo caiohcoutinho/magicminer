@@ -20,6 +20,8 @@ public class GameNumber {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gamenumber_id_generator")
+    @SequenceGenerator(name="gamenumber_id_generator", sequenceName = "gamenumber_id_seq", allocationSize = 1)
     public Long getGameNumberId() {
         return gameNumberId;
     }

@@ -9,4 +9,5 @@ import java.util.List;
 public interface GameRepository extends CrudRepository<Game, Long> {
 
     List<Game> findByGameTableId(Long gameTableId);
+    Game findByGameTableIdAndGameNumberId(Long gameTableId, Long gameNumberId);
 }

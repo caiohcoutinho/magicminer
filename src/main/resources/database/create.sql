@@ -48,3 +48,5 @@ create table longconfiguration(
     value int not null,
     primary key (configurationid)
 );
+
+ALTER TABLE GameTable ADD active boolean default true;

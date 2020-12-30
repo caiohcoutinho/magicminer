@@ -18,6 +18,8 @@ public class Ball {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ball_id_generator")
+    @SequenceGenerator(name="ball_id_generator", sequenceName = "ball_id_seq", allocationSize = 1)
     public Long getBallId() {
         return ballId;
     }

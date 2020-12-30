@@ -17,50 +17,50 @@
   <div class="algorithms">
     <div>
       <hr>
-      <h3>Aleatório</h3>
-      Seed: <input v-model="randomAlgorithmSeed" type="number">
-      <button v-on:click="runRandom()">Executar</button>
-    </div>
-    <div>
-      <hr>
-      <h3>Constante</h3>
-      Seed: <input v-model="constantAlgorithmSeed" type="number">
-      <button v-on:click="runConstant()">Executar</button>
-    </div>
-    <div>
-      <hr>
-      <h3>Genético</h3>
-      Seed: <input v-model="geneticAlgorithmSeed" type="number">
-      <button v-on:click="runGenetic()">Executar</button>
+      <select v-model="selectedAlgorithm">
+        <option v-for="algorithm in ['Constant', 'Random', 'Genetic']" v-bind:value="algorithm">{{algorithm}}</option>
+      </select>
+      Seed: <input v-model="algorithmSeed" type="number">
+      <button v-on:click="runAlgorithm()">Executar</button>
       <hr>
     </div>
   </div>
   <div class="gabarito">
     <table class="gameListTable table table-striped table-bordered table-hover">
       <tbody>
-      <tr>
-        <th>#</th>
-        <th>Data</th>
-        <th>Gabarito:
-          <select v-bind:value="selectedGameTableId" v-on:input="updateSelectedTable($event.target.value)">
-            <option v-for="gameTable in gameTableList" v-bind:value="gameTable.gameTableId">{{gameTable.name}}</option>
-          </select>
-        </th>
-        <th>Algoritmo</th>
-      </tr>
-      <tr v-for="(game, index) in gamesList" v-bind:class="{odd: index %2 == 1}">
-        <td>{{game.gameNumber}}<span v-if="game.valid == true">&#10003;</span></td>
-        <td>{{game.date}}</td>
-        <td>
-          <span v-for="i in _.range(0, 25)">{{game.ballsCompressed[i] == "1" ? ""+(i+1)+"&nbsp;" : ""}}</span>
-        </td>
-        <td>
-          <span v-if="generatedResultByGameNumber[game.gameNumber] != null">
-            <span v-for="i in _.range(0, 25)">{{generatedResultByGameNumber[game.gameNumber].ballsCompressed[i] == "1" ? ""+(i+1)+"&nbsp;" : ""}}</span>
-            <span>({{generatedResultByGameNumber[game.gameNumber].score}} acertos)</span>
-          </span>
-        </td>
-      </tr>
+        <tr>
+          <th>#</th>
+          <th>Data</th>
+          <th v-bind:colspan="selectedGameTableLock ? '1' : '25'">Gabarito:
+            <select v-if="selectedGameTableLock" v-bind:value="selectedGameTableId" v-on:input="updateSelectedTable($event.target.value)">
+              <option v-for="gameTable in gameTableList" v-bind:value="gameTable.gameTableId">{{gameTable.name}}</option>
+            </select>
+            <input v-on:input="updateSelectedGameTableName($event.target.value)" v-bind:value="selectedGameTableName" type="text" v-if="!selectedGameTableLock">
+            <img v-on:click="lockUnlockSelectedTable()" class="icon" v-bind:src="selectedGameTableLock ? 'img/lock.png':'img/unlock.png'"/>
+            <img v-on:click="newBlankTable()" class="icon" src="img/table.png"/>
+          </th>
+          <th>Algoritmo</th>
+        </tr>
+        <tr v-for="(gameNumber, index) in gameNumberList"
+            v-bind:class="{odd: index %2 == 1, editing: (!selectedGameTableLock), valid: (isGameValid(gameByGameNumber[gameNumber.gameNumber])), invalid: (!isGameValid(gameByGameNumber[gameNumber.gameNumber]))}">
+          <td>{{gameNumber.gameNumber}}<span v-if="isGameValid(gameByGameNumber[gameNumber.gameNumber])">&#10003;</span></td>
+          <td>{{gameNumber.gameDate}}</td>
+          <td v-if="selectedGameTableLock">
+            <span v-for="i in _.range(0, 25)" v-if="!isNullOrUndefined(gameByGameNumber[gameNumber.gameNumber])">{{gameByGameNumber[gameNumber.gameNumber].ballsCompressed[i] == "1" ? ""+(i+1)+"&nbsp;" : ""}}</span>
+          </td>
+          <td v-bind:class="{ball: true, selected: !isNullOrUndefined(gameByGameNumber[gameNumber.gameNumber]) && gameByGameNumber[gameNumber.gameNumber].ballsCompressed[i] == '1', notSelected: !isNullOrUndefined(gameByGameNumber[gameNumber.gameNumber]) && gameByGameNumber[gameNumber.gameNumber].ballsCompressed[i] == '0' }"
+              v-if="!selectedGameTableLock"
+              v-for="i in _.range(0, 25)"
+              v-on:click="updateBall(gameByGameNumber[gameNumber.gameNumber], i)">
+            <span>{{i+1}}</span>
+          </td>
+          <td>
+            <span v-if="generatedResultByGameNumber[gameNumber.gameNumber] != null">
+              <span v-for="i in _.range(0, 25)">{{generatedResultByGameNumber[gameNumber.gameNumber].ballsCompressed[i] == "1" ? ""+(i+1)+"&nbsp;" : ""}}</span>
+              <span>({{generatedResultByGameNumber[gameNumber.gameNumber].score}} acertos)</span>
+            </span>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>

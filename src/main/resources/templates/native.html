@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="js/axios.min.js"></script>
+  <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+  <link rel="stylesheet" href="stylesheets/bootstrap.min.css.map">
+  <link rel="stylesheet" href="stylesheets/magicminer.css">
+  <script src="js/underscore-min.js"></script>
+  <title>Magic Miner</title>
+</head>
+<body>
+<div id="magicminerApp" class="container text-center">
+  <h1>Magic Miner</h1>
+  <div class="algorithms">
+    <div>
+      <hr>
+      <div>
+        <select id="selectAlgorithm"></select>
+        Seed: <input id="inputAlgorithmSeed" type="number">
+        <button onclick="runAlgorithm()">Executar</button>
+      </div>
+      <div class="resultDiv">
+
+      </div>
+      <hr>
+    </div>
+  </div>
+  <div class="gabarito">
+    <table id="gameListTable" class="gameListTable table table-striped table-bordered table-hover">
+      <tbody>
+        <tr>
+          <th>#</th>
+          <th>Data</th>
+          <th>Gabarito:
+            <select id="selectGameTable"
+                    oninput="onchangeSelectedGameTable(event.target.value)">
+            </select>
+            <input id="textInputGameTableName" oninput="updateSelectedGameTableName(event.target.value)"
+                   type="text">
+            <img onclick="cloneTable()" class="icon" src="img/clone.png"/>
+            <img onclick="newBlankTable()" class="icon" src="img/table.png"/>
+            <img onclick="deleteTable()" class="icon" src="img/delete.png"/>
+          </th>
+          <th>Algoritmo</th>
+          <th>Acertos</th>
+        </tr>
+      </tbody>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script src="js/magicminer-native.js"></script>
+</body>
+</html>

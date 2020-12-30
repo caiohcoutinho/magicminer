@@ -89,9 +89,11 @@ public class GameCustomRepositoryImpl implements GameCustomRepository {
             Boolean[] balls = IntStream.rangeClosed(0, LotoFacilGame.GAME_SIZE).boxed().map(t -> false)
                     .collect(Collectors.toList()).toArray(new Boolean[LotoFacilGame.GAME_SIZE]);
 
-            ballsList.stream().forEach(b -> {
-                balls[b.getBallNumber()] = true;
-            });
+            if(ballsList != null) {
+                ballsList.stream().forEach(b -> {
+                    balls[b.getBallNumber()] = true;
+                });
+            }
 
             LotoFacilGame game = LotoFacilGame.createByBalls(balls);
             game.setGameNumber(gameNumber.getGameNumber());

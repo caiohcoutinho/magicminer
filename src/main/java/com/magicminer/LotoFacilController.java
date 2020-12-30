@@ -26,7 +26,7 @@ public class LotoFacilController {
 
     @RequestMapping(value = "/lotofacil/{gameTableId}", method = RequestMethod.GET)
     public ResponseEntity<List<LotoFacilGame>> getGameList(@PathVariable("gameTableId") Long gameTableId) {
-        return ResponseEntity.ok(gameCustomRepository.getAllGames());
+        return ResponseEntity.ok(gameCustomRepository.getGamesByGameTableId(gameTableId));
     }
 
     @RequestMapping(value = "/lotofacil/random", method = RequestMethod.GET)
@@ -76,6 +76,7 @@ public class LotoFacilController {
                     execution.setGameNumber(g.getGameNumber());
                     return execution;
                 }).collect(Collectors.toList());
+
         return ResponseEntity.ok(result);
     }
 }

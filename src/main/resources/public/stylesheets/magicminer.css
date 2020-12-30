@@ -17,3 +17,42 @@ table.gameListTable tr.odd{
 table.gameListTable tr:hover{
     background-color: #b5d5f5;
 }
+
+img.icon{
+    height: 17px;
+    cursor: pointer;
+}
+
+tr.editing .ball{
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px;
+}
+
+td.invalid span.checkIconSpan{
+    display: none;
+}
+
+tr.editing .ball.selected{
+    color: green;
+}
+
+tr.editing .ball.notSelected{
+    color: red
+}
+
+tr.editing.valid .ball{
+
+}
+
+tr.editing.invalid .ball{
+
+}
+
+span.imgSpan.lock img.unlock{
+    display: none;
+}
+
+span.imgSpan.unlock img.lock{
+    display: none;
+}

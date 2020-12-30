@@ -36,4 +36,9 @@ public class Main {
         return "index";
     }
 
+    @RequestMapping("/native")
+    String getNative() {
+        return "native";
+    }
+
 }

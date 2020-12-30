@@ -19,6 +19,8 @@ public class Configuration {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "configuration_id_generator")
+    @SequenceGenerator(name="configuration_id_generator", sequenceName = "configuration_id_seq", allocationSize = 1)
     public Long getConfigurationId() {
         return configurationId;
     }
