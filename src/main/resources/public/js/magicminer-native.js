@@ -140,6 +140,42 @@ let writeGameNumberList = function(gameNumberList){
     });
 }
 
+let roundToTwo = (number) => Math.floor(number*100)/100;
+
+let writeAlgorithmSummary = function(algorithmGameList){
+    let text = "";
+    let size = _.size(algorithmGameList);
+    text += "O Algoritmo fez "+size+" jogos.<br>";
+    let sum = _.reduce(algorithmGameList, function(memo, game){ return memo + game.score; }, 0);
+    text += "A nota média foi "+roundToTwo(sum/size)+".<br>";
+    let hit11 = _.size(_.filter(algorithmGameList, {score: 11}));
+    if(hit11 > 0){
+        text += "Acertou 11 bolas "+hit11+" vezes.<br>";
+    }
+    let hit12 = _.size(_.filter(algorithmGameList, {score: 12}));
+    if(hit12 > 0){
+        text += "Acertou 12 bolas "+hit12+" vezes.<br>";
+    }
+    let hit13 = _.size(_.filter(algorithmGameList, {score: 13}));
+    if(hit13 > 0){
+        text += "Acertou 13 bolas "+hit13+" vezes.<br>";
+    }
+    let hit14 = _.size(_.filter(algorithmGameList, {score: 14}));
+    if(hit14 > 0){
+        text += "Acertou 14 bolas "+hit14+" vezes.<br>";
+    }
+    let hit15 = _.size(_.filter(algorithmGameList, {score: 15}));
+    if(hit15 > 0){
+        text += "Acertou 15 bolas "+hit15+" vezes.<br>";
+    }
+    let totalPrize = (hit11*5)+(hit12*10)+(hit13*25)+(hit14*1500)+(hit15*3500000);
+    let totalSpent = size*(2.5);
+    text += "Gastou um total de R$"+roundToTwo(totalSpent)+".<br>";
+    text += "Ganhou um total de R$"+roundToTwo(totalPrize)+".<br>";
+    text += "Saldo (R$): "+(totalPrize - totalSpent)+".<br>";
+    document.getElementById("resultDiv").innerHTML = text;
+}
+
 let writeAlgorithmGameList = function(algorithmGameList){
     let tbodyRef = document.getElementById("gameListTable").getElementsByTagName('tbody')[1];
 
@@ -343,8 +379,9 @@ let cloneTable = function(){
 }
 
 let runAlgorithm = function(){
-    axios.get("/lotofacil/"+getSelectedAlgorithmName(), {seed: getSeed(), gameTableId: getSelectedGameTableId()}).then(response => {
+    axios.get("/lotofacil/"+getSelectedAlgorithmName()+"?seed="+getSeed()+"&gameTableId="+getSelectedGameTableId()).then(response => {
         writeAlgorithmGameList(response.data);
+        writeAlgorithmSummary(response.data);
     });
 }
 
